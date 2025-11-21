@@ -52,7 +52,12 @@ const Index = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <div 
+        className="fixed inset-0 bg-cover bg-center opacity-[0.03] pointer-events-none" 
+        style={{ backgroundImage: 'url(https://cdn.poehali.dev/projects/600482ac-ffd2-42b9-9b04-a01fdd8838a6/files/9e5cff94-609d-48d5-be7a-4e510a48a226.jpg)' }}
+      />
+      <div className="relative z-10">
       <div className="bg-gradient-to-r from-primary via-blue-600 to-primary">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
@@ -102,19 +107,46 @@ const Index = () => {
             </TabsList>
           )}
 
-          <TabsContent value="home" className="space-y-8 animate-fade-in">
-            <div className="text-center max-w-3xl mx-auto space-y-4 py-8">
-              <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-3xl mb-6 animate-pulse">
-                <Icon name="Sparkles" className="text-primary" size={48} />
+          <TabsContent value="home" className="space-y-12 animate-fade-in">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent rounded-3xl blur-3xl" />
+              <div className="text-center max-w-4xl mx-auto space-y-6 py-12 relative">
+                <div className="inline-flex items-center gap-3 bg-primary/10 px-6 py-3 rounded-full mb-4">
+                  <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
+                  <span className="text-sm font-medium text-primary">Нижегородская область</span>
+                </div>
+                <div className="inline-flex items-center justify-center w-28 h-28 bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-3xl mb-6 shadow-2xl">
+                  <Icon name="Sparkles" className="text-primary animate-pulse" size={56} />
+                </div>
+                <h2 className="text-6xl font-bold bg-gradient-to-r from-primary via-blue-600 to-primary bg-clip-text text-transparent leading-tight">
+                  База документов 
+                  <br />
+                  с ИИ-помощником
+                </h2>
+                <p className="text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                  Создавайте отчеты, ищите документы и получайте готовые примеры. 
+                  Искусственный интеллект автоматически подберет нужные ссылки на НПА и проверит корректность.
+                </p>
+                <div className="flex items-center justify-center gap-8 pt-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-primary">12K+</div>
+                    <div className="text-sm text-muted-foreground mt-1">Документов</div>
+                  </div>
+                  <div className="w-px h-12 bg-border" />
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-blue-600">2K+</div>
+                    <div className="text-sm text-muted-foreground mt-1">НПА</div>
+                  </div>
+                  <div className="w-px h-12 bg-border" />
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-green-600">3K+</div>
+                    <div className="text-sm text-muted-foreground mt-1">Отчетов</div>
+                  </div>
+                </div>
               </div>
-              <h2 className="text-5xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">База документов с ИИ-помощником</h2>
-              <p className="text-xl text-muted-foreground">
-                Создавайте отчеты, ищите документы и получайте готовые примеры. 
-                Искусственный интеллект автоматически подберет нужные ссылки на НПА и проверит корректность.
-              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {features.map((feature, index) => (
                 <Card 
                   key={index} 
@@ -138,7 +170,7 @@ const Index = () => {
               ))}
             </div>
 
-            <Card className="max-w-4xl mx-auto bg-gradient-to-br from-primary/10 via-blue-500/5 to-primary/10 border-primary/30 shadow-lg">
+            <Card className="max-w-5xl mx-auto bg-gradient-to-br from-primary/10 via-blue-500/5 to-primary/10 border-primary/30 shadow-xl">
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary/30 to-blue-500/30 rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -177,15 +209,18 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <div className="text-center">
+            <div className="text-center space-y-6">
               <Button 
                 size="lg" 
-                className="text-lg px-12 py-6 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90" 
+                className="text-xl px-16 py-8 rounded-3xl shadow-2xl hover:shadow-primary/50 hover:scale-110 transition-all bg-gradient-to-r from-primary via-blue-600 to-primary hover:from-primary/90 hover:via-blue-600/90 hover:to-primary/90 font-bold" 
                 onClick={() => setActiveTab('create')}
               >
-                <Icon name="Sparkles" size={24} className="mr-3" />
+                <Icon name="Sparkles" size={28} className="mr-3" />
                 Начать работу
               </Button>
+              <p className="text-sm text-muted-foreground">
+                Бесплатно и без регистрации
+              </p>
             </div>
           </TabsContent>
 
@@ -555,6 +590,7 @@ const Index = () => {
             </Card>
           </TabsContent>
         </Tabs>
+      </div>
       </div>
     </div>
   );
