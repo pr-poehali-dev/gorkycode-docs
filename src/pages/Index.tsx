@@ -13,18 +13,31 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('home');
 
-  const stats = [
-    { label: 'Документов в базе', value: '12,847', icon: 'FileText', color: 'text-primary' },
-    { label: 'Отчетов создано', value: '3,421', icon: 'FileCheck', color: 'text-green-600' },
-    { label: 'НПА в системе', value: '2,156', icon: 'Scale', color: 'text-blue-600' },
-    { label: 'Активных задач', value: '127', icon: 'ClipboardList', color: 'text-orange-600' },
-  ];
-
-  const recentDocuments = [
-    { id: 1, title: 'Постановление №245 от 15.11.2025', type: 'НПА', status: 'На согласовании', date: '15.11.2025' },
-    { id: 2, title: 'Ответ на обращение гражданина Иванова И.И.', type: 'Письмо', status: 'Завершено', date: '14.11.2025' },
-    { id: 3, title: 'Аналитическая записка по вопросу благоустройства', type: 'Записка', status: 'В работе', date: '13.11.2025' },
-    { id: 4, title: 'Служебное письмо в МинФин', type: 'Письмо', status: 'Завершено', date: '12.11.2025' },
+  const features = [
+    { 
+      title: 'Создать отчет', 
+      description: 'Сгенерируйте документ с помощью ИИ', 
+      icon: 'FilePlus', 
+      action: () => setActiveTab('create')
+    },
+    { 
+      title: 'Найти документы', 
+      description: 'Поиск по всей базе документов', 
+      icon: 'Search', 
+      action: () => setActiveTab('search')
+    },
+    { 
+      title: 'Примеры отчетов', 
+      description: 'Посмотрите готовые примеры', 
+      icon: 'FolderOpen', 
+      action: () => setActiveTab('examples')
+    },
+    { 
+      title: 'База документов', 
+      description: 'Доступ ко всем документам', 
+      icon: 'Database', 
+      action: () => setActiveTab('database')
+    },
   ];
 
   const reportTemplates = [
@@ -36,14 +49,7 @@ const Index = () => {
 
   const documentTypes = ['Все типы', 'НПА', 'Письма', 'Записки', 'Поручения', 'Решения'];
 
-  const StatusBadge = ({ status }: { status: string }) => {
-    const variants: Record<string, string> = {
-      'На согласовании': 'bg-orange-100 text-orange-700',
-      'В работе': 'bg-blue-100 text-blue-700',
-      'Завершено': 'bg-green-100 text-green-700',
-    };
-    return <Badge className={variants[status] || 'bg-gray-100 text-gray-700'}>{status}</Badge>;
-  };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -97,64 +103,78 @@ const Index = () => {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="home" className="space-y-6 animate-fade-in">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {stats.map((stat, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-muted-foreground">
-                      {stat.label}
-                    </CardTitle>
-                    <Icon name={stat.icon as any} className={stat.color} size={20} />
+          <TabsContent value="home" className="space-y-8 animate-fade-in">
+            <div className="text-center max-w-3xl mx-auto space-y-4 py-8">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-2xl mb-4">
+                <Icon name="Sparkles" className="text-primary" size={40} />
+              </div>
+              <h2 className="text-4xl font-bold">База документов с ИИ-помощником</h2>
+              <p className="text-xl text-muted-foreground">
+                Создавайте отчеты, ищите документы и получайте готовые примеры. 
+                Искусственный интеллект автоматически подберет нужные ссылки на НПА и проверит корректность.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {features.map((feature, index) => (
+                <Card 
+                  key={index} 
+                  className="hover:shadow-lg hover:border-primary/50 transition-all cursor-pointer group"
+                  onClick={feature.action}
+                >
+                  <CardHeader>
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <Icon name={feature.icon as any} className="text-primary" size={24} />
+                      </div>
+                      <div className="flex-1">
+                        <CardTitle className="text-xl mb-2">{feature.title}</CardTitle>
+                        <CardDescription className="text-base">{feature.description}</CardDescription>
+                      </div>
+                      <Icon name="ArrowRight" className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" size={20} />
+                    </div>
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-3xl font-bold">{stat.value}</div>
-                  </CardContent>
                 </Card>
               ))}
             </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Icon name="Clock" size={20} />
-                  Недавние документы
-                </CardTitle>
-                <CardDescription>Последние обновления в системе</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Название документа</TableHead>
-                      <TableHead>Тип</TableHead>
-                      <TableHead>Статус</TableHead>
-                      <TableHead>Дата</TableHead>
-                      <TableHead className="text-right">Действия</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {recentDocuments.map((doc) => (
-                      <TableRow key={doc.id} className="hover:bg-muted/50">
-                        <TableCell className="font-medium">{doc.title}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline">{doc.type}</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <StatusBadge status={doc.status} />
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">{doc.date}</TableCell>
-                        <TableCell className="text-right">
-                          <Button variant="ghost" size="sm">
-                            <Icon name="Eye" size={16} />
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+            <Card className="max-w-4xl mx-auto bg-primary/5 border-primary/20">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Icon name="Lightbulb" className="text-primary" size={20} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-lg mb-2">Возможности ИИ-помощника</h3>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={18} />
+                        <span>Автоматический подбор ссылок на действующие НПА</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={18} />
+                        <span>Проверка документов на противоречия и корректность формулировок</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={18} />
+                        <span>Поиск связанных документов и контекста по теме</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={18} />
+                        <span>Генерация документов по стандартам делопроизводства</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </CardContent>
             </Card>
+
+            <div className="text-center">
+              <Button size="lg" className="text-lg px-8" onClick={() => setActiveTab('create')}>
+                <Icon name="Sparkles" size={20} className="mr-2" />
+                Начать работу
+              </Button>
+            </div>
           </TabsContent>
 
           <TabsContent value="create" className="space-y-6 animate-fade-in">
