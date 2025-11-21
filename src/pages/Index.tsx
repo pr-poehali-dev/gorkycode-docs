@@ -61,14 +61,8 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-4">
               <Button variant="ghost" className="text-white hover:bg-sidebar-accent">
-                <Icon name="Bell" size={20} />
+                <Icon name="HelpCircle" size={20} />
               </Button>
-              <Button variant="ghost" className="text-white hover:bg-sidebar-accent">
-                <Icon name="Settings" size={20} />
-              </Button>
-              <div className="w-9 h-9 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
-                АИ
-              </div>
             </div>
           </div>
         </div>
