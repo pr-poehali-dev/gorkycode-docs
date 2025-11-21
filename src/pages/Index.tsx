@@ -53,21 +53,22 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="border-b bg-sidebar">
-        <div className="container mx-auto px-6 py-4">
+      <div className="bg-gradient-to-r from-primary via-blue-600 to-primary">
+        <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Icon name="FileStack" className="text-white" size={24} />
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-lg">
+                <Icon name="Sparkles" className="text-white" size={28} />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">GORKYCODE 2025</h1>
-                <p className="text-sm text-gray-300">База документов администрации</p>
+                <h1 className="text-2xl font-bold text-white tracking-tight">GORKYCODE 2025</h1>
+                <p className="text-sm text-blue-100">ИИ-помощник для работы с документами</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" className="text-white hover:bg-sidebar-accent">
-                <Icon name="HelpCircle" size={20} />
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" className="text-white hover:bg-white/20 backdrop-blur-sm">
+                <Icon name="Github" size={20} className="mr-2" />
+                GitHub
               </Button>
             </div>
           </div>
@@ -76,39 +77,37 @@ const Index = () => {
 
       <div className="container mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 max-w-4xl">
-            <TabsTrigger value="home">
-              <Icon name="Home" size={16} className="mr-2" />
-              Главная
-            </TabsTrigger>
-            <TabsTrigger value="create">
-              <Icon name="FilePlus" size={16} className="mr-2" />
-              Создать отчет
-            </TabsTrigger>
-            <TabsTrigger value="database">
-              <Icon name="Database" size={16} className="mr-2" />
-              База документов
-            </TabsTrigger>
-            <TabsTrigger value="search">
-              <Icon name="Search" size={16} className="mr-2" />
-              Поиск по теме
-            </TabsTrigger>
-            <TabsTrigger value="examples">
-              <Icon name="FolderOpen" size={16} className="mr-2" />
-              Примеры
-            </TabsTrigger>
-            <TabsTrigger value="generator">
-              <Icon name="Sparkles" size={16} className="mr-2" />
-              Генератор
-            </TabsTrigger>
-          </TabsList>
+          {activeTab !== 'home' && (
+            <TabsList className="grid w-full grid-cols-5 max-w-3xl mx-auto">
+              <TabsTrigger value="create">
+                <Icon name="FilePlus" size={16} className="mr-2" />
+                Создать
+              </TabsTrigger>
+              <TabsTrigger value="database">
+                <Icon name="Database" size={16} className="mr-2" />
+                База
+              </TabsTrigger>
+              <TabsTrigger value="search">
+                <Icon name="Search" size={16} className="mr-2" />
+                Поиск
+              </TabsTrigger>
+              <TabsTrigger value="examples">
+                <Icon name="FolderOpen" size={16} className="mr-2" />
+                Примеры
+              </TabsTrigger>
+              <TabsTrigger value="generator">
+                <Icon name="Sparkles" size={16} className="mr-2" />
+                Генератор
+              </TabsTrigger>
+            </TabsList>
+          )}
 
           <TabsContent value="home" className="space-y-8 animate-fade-in">
             <div className="text-center max-w-3xl mx-auto space-y-4 py-8">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-2xl mb-4">
-                <Icon name="Sparkles" className="text-primary" size={40} />
+              <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-3xl mb-6 animate-pulse">
+                <Icon name="Sparkles" className="text-primary" size={48} />
               </div>
-              <h2 className="text-4xl font-bold">База документов с ИИ-помощником</h2>
+              <h2 className="text-5xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">База документов с ИИ-помощником</h2>
               <p className="text-xl text-muted-foreground">
                 Создавайте отчеты, ищите документы и получайте готовые примеры. 
                 Искусственный интеллект автоматически подберет нужные ссылки на НПА и проверит корректность.
@@ -119,48 +118,57 @@ const Index = () => {
               {features.map((feature, index) => (
                 <Card 
                   key={index} 
-                  className="hover:shadow-lg hover:border-primary/50 transition-all cursor-pointer group"
+                  className="hover:shadow-xl hover:scale-105 hover:border-primary transition-all cursor-pointer group relative overflow-hidden"
                   onClick={feature.action}
                 >
-                  <CardHeader>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <CardHeader className="relative">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <Icon name={feature.icon as any} className="text-primary" size={24} />
+                      <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Icon name={feature.icon as any} className="text-primary" size={28} />
                       </div>
                       <div className="flex-1">
-                        <CardTitle className="text-xl mb-2">{feature.title}</CardTitle>
+                        <CardTitle className="text-xl mb-2 group-hover:text-primary transition-colors">{feature.title}</CardTitle>
                         <CardDescription className="text-base">{feature.description}</CardDescription>
                       </div>
-                      <Icon name="ArrowRight" className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" size={20} />
+                      <Icon name="ArrowRight" className="text-muted-foreground group-hover:text-primary group-hover:translate-x-2 transition-all" size={24} />
                     </div>
                   </CardHeader>
                 </Card>
               ))}
             </div>
 
-            <Card className="max-w-4xl mx-auto bg-primary/5 border-primary/20">
+            <Card className="max-w-4xl mx-auto bg-gradient-to-br from-primary/10 via-blue-500/5 to-primary/10 border-primary/30 shadow-lg">
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Icon name="Lightbulb" className="text-primary" size={20} />
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary/30 to-blue-500/30 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <Icon name="Lightbulb" className="text-primary" size={24} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-lg mb-2">Возможности ИИ-помощника</h3>
-                    <ul className="space-y-2 text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={18} />
+                    <h3 className="font-bold text-xl mb-3 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">Возможности ИИ-помощника</h3>
+                    <ul className="space-y-3 text-muted-foreground">
+                      <li className="flex items-start gap-3">
+                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Icon name="Check" className="text-primary" size={16} />
+                        </div>
                         <span>Автоматический подбор ссылок на действующие НПА</span>
                       </li>
-                      <li className="flex items-start gap-2">
-                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={18} />
+                      <li className="flex items-start gap-3">
+                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Icon name="Check" className="text-primary" size={16} />
+                        </div>
                         <span>Проверка документов на противоречия и корректность формулировок</span>
                       </li>
-                      <li className="flex items-start gap-2">
-                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={18} />
+                      <li className="flex items-start gap-3">
+                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Icon name="Check" className="text-primary" size={16} />
+                        </div>
                         <span>Поиск связанных документов и контекста по теме</span>
                       </li>
-                      <li className="flex items-start gap-2">
-                        <Icon name="Check" className="text-primary mt-0.5 flex-shrink-0" size={18} />
+                      <li className="flex items-start gap-3">
+                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Icon name="Check" className="text-primary" size={16} />
+                        </div>
                         <span>Генерация документов по стандартам делопроизводства</span>
                       </li>
                     </ul>
@@ -170,8 +178,12 @@ const Index = () => {
             </Card>
 
             <div className="text-center">
-              <Button size="lg" className="text-lg px-8" onClick={() => setActiveTab('create')}>
-                <Icon name="Sparkles" size={20} className="mr-2" />
+              <Button 
+                size="lg" 
+                className="text-lg px-12 py-6 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90" 
+                onClick={() => setActiveTab('create')}
+              >
+                <Icon name="Sparkles" size={24} className="mr-3" />
                 Начать работу
               </Button>
             </div>
